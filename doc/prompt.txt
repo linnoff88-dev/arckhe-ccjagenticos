@@ -1,0 +1,48 @@
+Install Claude OS for from this folder. Ask once for permission, then run all four
+commands in order without further prompts:
+
+1. use the below attached folder
+2. cd ~/code/claude-os && bun install
+3. cd ~/code/claude-os && bun run setup
+4. cd ~/code/claude-os && bun run dev
+
+Step 3 (`bun run setup`) does the heavy lifting on my behalf:
+- Scans my machine (~/.claude/, Obsidian, Pinecone, OpenRouter)
+- Copies the /dream skill into ~/.claude/skills/dream
+- Installs the daily Dream cron (macOS launchd)
+- Drops a marker so the wizard auto-pops on first open
+- Tells me which env keys (Pinecone, OpenRouter) would unlock more
+
+If step 3 reports missing API keys I might want, ASK ME for each one
+before continuing. For each key I give you:
+   echo "<KEY_NAME>=<value>" >> ~/code/claude-os/.env.local
+then re-run `bun run scripts/aggregate.ts` once.
+
+If macOS prompts for a Keychain password during step 3, tell me to
+enter my login password — that's macOS, not you.
+
+Step 4 (`bun run dev`) stays running and pops the 7-step wizard in
+my browser.
+
+Once the wizard is open, send this line:
+
+  ✨ Claude OS is ready. The wizard is open in your browser — walk
+  the 7 steps and click Save at the end.
+
+Then immediately offer to keep helping. Say something like: "I can
+guide you through this and connect the data specific to your
+computer — just let me know what you want to connect." Mention the
+specific things I might want to chat about:
+
+- Memory: extra Obsidian vaults or memory folders the auto-scan
+  missed (set CLAUDE_OS_OBSIDIAN_PATH for custom locations)
+- The daily Dream review (/dream reads my last 24h and writes 4
+  prescriptions to ~/.claude-os/dreams/ every morning at 7am — I
+  can run it now, change the schedule, or skip it)
+- Pinecone / OpenRouter / Anthropic API keys if any are still
+  missing and I'd benefit
+- Anything else I see on the dashboard — skill recommendations,
+  dream prescriptions, memory hygiene
+
+Then wait for me to pick. Don't mention URLs, ports, or technical
+details unless I ask.
