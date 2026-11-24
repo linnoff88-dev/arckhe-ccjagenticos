@@ -1,4 +1,4 @@
-﻿# Claude OS
+# Claude OS
 
 ![Claude OS â€” Unlimited Power: Agentic OS with data, context, agents and automation working together](doc/cover.png)
 
@@ -460,4 +460,4 @@ MIT. See [`LICENSE`](LICENSE).
 
 ---
 
-Projeto adaptado da comunidade INEMA TDS - Marca Arckhe
+Projeto adaptado da comunidade ARCKHÉ TDS - Marca Arckhe

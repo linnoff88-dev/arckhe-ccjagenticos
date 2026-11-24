@@ -18,7 +18,7 @@ if (existsSync(envPath)) {
 }
 
 const SHARED =
-  "Hand-painted anime watercolor in the studio Ghibli style. A peaceful Japanese hilltop study with a wooden balcony, an antique brass telescope on a tripod, papers and journals on a small writing desk, ferns in clay pots. Slow, cinematic, contemplative atmosphere. Painterly textures, visible brushwork, generous negative sky, no characters, no text, no UI, no watermark, no logos. 4K detail.";
+  "Hand-painted anime watercolor in the studio Ghibli style. A peaceful Japanese hilltop study with a wooden balcony, an antique brass telescope on a tripod, papers and journals on a small writing desk, ferns in clay pots. Slow, cARCKHÉtic, contemplative atmosphere. Painterly textures, visible brushwork, generous negative sky, no characters, no text, no UI, no watermark, no logos. 4K detail.";
 
 interface Job {
   out: string;
@@ -54,8 +54,8 @@ async function main() {
   );
   console.log("\n[cadence] summary:");
   results.forEach((r, i) => {
-    if (r.status === "fulfilled") console.log(`  ✅ ${jobs[i].out}`);
-    else console.log(`  ❌ ${jobs[i].out} — ${(r.reason as Error).message}`);
+    if (r.status === "fulfilled") console.log(`  âœ… ${jobs[i].out}`);
+    else console.log(`  âŒ ${jobs[i].out} â€” ${(r.reason as Error).message}`);
   });
 }
 

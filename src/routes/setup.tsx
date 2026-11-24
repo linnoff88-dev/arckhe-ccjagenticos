@@ -60,7 +60,7 @@ import {
 } from "lucide-react";
 
 // `/setup` is no longer a separate full-screen wizard route. Instead, it
-// renders the dashboard with the setup modal forced open — same UX as `/`
+// renders the dashboard with the setup modal forced open â€” same UX as `/`
 // when the user has no config yet, but the URL stays as /setup so direct
 // links and Vite's --open=/setup flag still work.
 function SetupRoute() {
@@ -89,9 +89,9 @@ const EMERALD = "#3ddc97";
 const AMBER = "#fbbf24";
 const SKY = "#60a5fa";
 
-// Sidecar base URL — defined early in the module so it's available to all
+// Sidecar base URL â€” defined early in the module so it's available to all
 // functions including code-split route components.
-// (sidecar removed — wizard is pure UI; aggregator runs in terminal via `bun run setup`)
+// (sidecar removed â€” wizard is pure UI; aggregator runs in terminal via `bun run setup`)
 
 // ---------- Types & defaults ----------
 
@@ -122,7 +122,7 @@ interface ToolDef {
   lastActivity?: string;
 }
 
-// Demo-data sentinel — set by aggregate.ts in live-data.example.json.
+// Demo-data sentinel â€” set by aggregate.ts in live-data.example.json.
 // When true, Step 3 (Detect tools) suppresses fake "detected" pills so a fresh
 // clone doesn't see false positives for tools the user doesn't have.
 let IS_DEMO_DATA = true;
@@ -146,7 +146,7 @@ function hydrateLiveSignals(liveData: any) {
 
 // `defaultStatus` and `lastActivity` are only fallbacks for tool keys that
 // don't have a real detection contract entry yet. The real signal comes
-// from `detectionForTool()` (which reads liveData.detection.apps) — that's
+// from `detectionForTool()` (which reads liveData.detection.apps) â€” that's
 // what the badge text and the sub-text actually use at render time. We
 // start every "default to detected" tool as missing so a brand-new clone
 // with no aggregator run cannot show fake "active 2h ago" text.
@@ -243,7 +243,7 @@ const TOOLS: ToolDef[] = [
 // (VALIDATION_BY_TOOL removed alongside the old "Locate data" step.)
 
 // Map our internal ToolKey to the detection contract from aggregate.ts.
-// `null` means the detection layer doesn't know about that tool yet — we fall
+// `null` means the detection layer doesn't know about that tool yet â€” we fall
 // back to the hardcoded TOOLS defaults. We exclude `terminals` because that
 // entry is a nested aggregate (current + installed list), not a single
 // AppDetectionEntry.
@@ -251,10 +251,10 @@ type DetectionAppKey = Exclude<keyof DetectionShape["apps"], "terminals">;
 const TOOL_DETECTION_KEY: Partial<Record<ToolKey, DetectionAppKey>> = {
   claude_code: "claudeCode",
   claude_desktop: "claudeApp",
-  // claude_vscode  → no detection contract, keep default
+  // claude_vscode  â†’ no detection contract, keep default
   antigravity: "antigravity",
   codex: "codex",
-  // gemini, anthropic_api, openai_api, openrouter, openclaw → fall back
+  // gemini, anthropic_api, openai_api, openrouter, openclaw â†’ fall back
 };
 
 function detectionForTool(
@@ -271,7 +271,7 @@ function detectionForTool(
   const ver = entry.version ? `v${entry.version}` : null;
   return {
     detected: true,
-    label: ver ? `Detected · ${ver}` : "Detected",
+    label: ver ? `Detected Â· ${ver}` : "Detected",
     meta: entry.path,
   };
 }
@@ -407,7 +407,7 @@ function isToolReallyDetected(tool: ToolDef): boolean {
   // flags computed above.
   if (tool.key === "anthropic_api") return ANTHROPIC_DETECTED;
   if (tool.key === "openrouter") return OPENROUTER_DETECTED;
-  // Demo data lies — assume nothing is detected so we don't auto-toggle
+  // Demo data lies â€” assume nothing is detected so we don't auto-toggle
   // tools the brand-new user doesn't actually have.
   if (IS_DEMO_DATA) return false;
   return tool.defaultStatus === "detected";
@@ -424,7 +424,7 @@ function buildInitialConfig(): ConfigShape {
     tools[t.key] = t.envVar ? { enabled, envVar: t.envVar } : { enabled, path: t.defaultPath };
   }
   // Seed envKeys with empty strings for any keys the detection layer flagged
-  // as needed — keeps the config JSON shape consistent. Tolerate missing /
+  // as needed â€” keeps the config JSON shape consistent. Tolerate missing /
   // non-array envKeysNeeded so we don't crash when the wizard renders before
   // live-data hydrates (the React Query fallback ships an empty detection).
   const envKeys: Record<string, string> = {};
@@ -456,7 +456,7 @@ function persistInstalledConfig(final: ConfigShape, markJustInstalled = false) {
 }
 
 // User-visible numbered steps. Welcome is a pre-roll (step index 0) and is
-// intentionally not in this list — the Stepper hides during Welcome and shows
+// intentionally not in this list â€” the Stepper hides during Welcome and shows
 // 1..7 once the wizard begins. "You're set" is the final visible step and the
 // finish step.
 const STEP_TITLES = [
@@ -479,12 +479,12 @@ const OPERATOR_NAME_KEY = "claude-os.operator-name.v1";
 
 // ---------- Component ----------
 
-// SetupModal — the wizard rendered as a centered modal layered over the
+// SetupModal â€” the wizard rendered as a centered modal layered over the
 // dashboard. The dashboard always renders underneath; this component only
 // owns the wizard's internal state (step, config, navigation). When the
 // user finishes (or cancels), `onClose` fires and the parent unmounts us.
 //
-// No `useNavigate` here — the entire point of the modal architecture is
+// No `useNavigate` here â€” the entire point of the modal architecture is
 // that we never navigate. State changes only.
 export function SetupModal({ onClose }: { onClose: () => void }) {
   // Hydrate module-level detection signals from runtime data
@@ -497,7 +497,7 @@ export function SetupModal({ onClose }: { onClose: () => void }) {
     (patch: (prev: ConfigShape) => { next: ConfigShape; flashed: string[] }) => {
       setConfig((prev) => {
         const { next } = patch(prev);
-        // flashed is intentionally unused — the right-side drawer was removed,
+        // flashed is intentionally unused â€” the right-side drawer was removed,
         // so there's nothing to flash. We keep the patch contract so step
         // components can stay generic.
         return next;
@@ -564,7 +564,7 @@ export function SetupModal({ onClose }: { onClose: () => void }) {
       aria-modal="true"
       aria-label="Set up Claude OS"
     >
-      {/* Tiny corner anchor — brand mark + close button — sits subtly outside
+      {/* Tiny corner anchor â€” brand mark + close button â€” sits subtly outside
           the centered card so the eye lands on the card itself. The brand
           mark gets a soft orange halo so it reads as a piece of identity
           and not just a logo. */}
@@ -580,7 +580,7 @@ export function SetupModal({ onClose }: { onClose: () => void }) {
           <img src={claudeLogo} alt="Claude" className="h-5 w-5 object-contain drop-shadow-sm" />
         </div>
         <span className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground/80 hidden sm:inline">
-          Claude OS · Setup
+          Claude OS Â· Setup
         </span>
       </div>
       <button
@@ -594,7 +594,7 @@ export function SetupModal({ onClose }: { onClose: () => void }) {
       {/* Centered viewport: stepper + card + nav stack vertically and sit in
           the middle of the page. */}
       <div className="min-h-full flex flex-col items-center justify-center px-4 py-14 md:py-20">
-        {/* Stepper — centered, just above the card */}
+        {/* Stepper â€” centered, just above the card */}
         <div className="mb-6">
           <Stepper current={step} />
         </div>
@@ -629,7 +629,7 @@ export function SetupModal({ onClose }: { onClose: () => void }) {
           </div>
         </div>
 
-        {/* Bottom nav — centered under the card. Back is on the left of the
+        {/* Bottom nav â€” centered under the card. Back is on the left of the
             same row; Skip/Next are on the right. They share the card's width
             so the eye reads the whole stack as one unit. */}
         <div className="w-full max-w-3xl mt-6 flex items-center justify-between">
@@ -761,10 +761,10 @@ function Stepper({ current }: { current: number }) {
           );
         })}
       </div>
-      {/* Step label below the dots — quiet, just enough orientation */}
+      {/* Step label below the dots â€” quiet, just enough orientation */}
       <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground/70 tabular-nums">
         Step {visibleCurrent + 1} of {STEP_TITLES.length}
-        <span className="text-muted-foreground/40 mx-1.5">·</span>
+        <span className="text-muted-foreground/40 mx-1.5">Â·</span>
         <span className="text-foreground/75">{visibleTitle}</span>
       </div>
     </div>
@@ -806,7 +806,7 @@ function StepContent({
 
 function StepWelcome() {
   // Clear stale draft and scan state on mount so a re-run of the wizard
-  // starts fresh. We do NOT clear "claude-os-config" here — that's the
+  // starts fresh. We do NOT clear "claude-os-config" here â€” that's the
   // installed config that the dashboard depends on. It gets overwritten
   // by Activate, not deleted by merely visiting /setup.
   useEffect(() => {
@@ -841,7 +841,7 @@ function StepWelcome() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,rgba(0,0,0,0.55)_100%)]" />
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
         {/* Soft orange wash from the bottom-left so the hero feels rooted in
-            the brand color rather than purely cinematic. */}
+            the brand color rather than purely cARCKHÉtic. */}
         <div
           aria-hidden
           className="absolute inset-0 mix-blend-screen opacity-50"
@@ -875,7 +875,7 @@ function StepWelcome() {
         style={{ color: "color-mix(in oklab, var(--foreground) 78%, transparent)" }}
       >
         We'll detect your tools, point at your data, and install your daily Dream review. About 90
-        seconds — no commitments.
+        seconds â€” no commitments.
       </p>
       <div className="flex flex-wrap gap-2.5 text-sm">
         <BadgeRow icon={<Cog className="h-4 w-4" />} label="Detect" color={ORANGE} />
@@ -1022,7 +1022,7 @@ function StepPersonalize() {
       <Eyebrow>Make it yours</Eyebrow>
       <H1>Howdy.</H1>
       <Sub>
-        Tell us your name and drop in a photo. Both stay in your browser — nothing leaves this
+        Tell us your name and drop in a photo. Both stay in your browser â€” nothing leaves this
         device. Skip either if you'd rather keep the defaults.
       </Sub>
 
@@ -1071,7 +1071,7 @@ function StepPersonalize() {
             <div className="flex-1 min-w-0">
               <div className="text-sm font-semibold mb-1 tracking-tight">Looks good.</div>
               <div className="text-[12px] text-muted-foreground mb-3 leading-relaxed">
-                Stored locally — only this browser ever sees it.
+                Stored locally â€” only this browser ever sees it.
               </div>
               <div className="flex flex-wrap gap-2">
                 <button
@@ -1132,10 +1132,10 @@ function StepPersonalize() {
             {busy ? <Sparkles className="h-7 w-7 animate-pulse" /> : <User className="h-7 w-7" />}
           </div>
           <div className="text-sm font-semibold mb-1.5 tracking-tight">
-            {busy ? "Processing…" : "Drop a photo here, or click to browse"}
+            {busy ? "Processingâ€¦" : "Drop a photo here, or click to browse"}
           </div>
           <div className="text-[12px] text-muted-foreground leading-relaxed">
-            JPG, PNG, or WEBP. We downscale to 256×256 before saving — your file never leaves the
+            JPG, PNG, or WEBP. We downscale to 256Ã—256 before saving â€” your file never leaves the
             browser.
           </div>
           {error && (
@@ -1187,16 +1187,16 @@ function ToolIcon({ tool, size = 34 }: { tool: ToolDef; size?: number }) {
   );
 }
 
-// Visual scan steps — purely decorative; the real work happens via the SSE
+// Visual scan steps â€” purely decorative; the real work happens via the SSE
 // aggregator. We rotate through these so the user has something to read while
 // the actual scan runs in the background.
 const SCAN_STAGES: { label: string; icon: typeof Search }[] = [
-  { label: "Looking for AI editors…", icon: Search },
-  { label: "Probing terminals…", icon: HardDrive },
-  { label: "Reading Claude sessions…", icon: MessagesSquare },
-  { label: "Scanning memory stores…", icon: Brain },
-  { label: "Checking subscriptions…", icon: Sparkles },
-  { label: "Tallying API keys…", icon: KeyRound },
+  { label: "Looking for AI editorsâ€¦", icon: Search },
+  { label: "Probing terminalsâ€¦", icon: HardDrive },
+  { label: "Reading Claude sessionsâ€¦", icon: MessagesSquare },
+  { label: "Scanning memory storesâ€¦", icon: Brain },
+  { label: "Checking subscriptionsâ€¦", icon: Sparkles },
+  { label: "Tallying API keysâ€¦", icon: KeyRound },
 ];
 
 function StepDetect({
@@ -1236,7 +1236,7 @@ function StepDetect({
     onAdvance();
   }, [onAdvance]);
 
-  // No more "scanning" — the scan happened in the terminal. Step 2 lands
+  // No more "scanning" â€” the scan happened in the terminal. Step 2 lands
   // directly on the detection results (or an empty-state pointing at
   // `bun run setup` for cold-start clones).
   useEffect(() => {
@@ -1254,7 +1254,7 @@ function StepDetect({
       const projects = Number(ld?.summary?.projectsTracked ?? 0);
       const messages = Number(ld?.summary?.totalAssistantMessages ?? 0);
       if (projects > 0) {
-        queue.push(`${projects} Claude projects · ${messages.toLocaleString()} messages`);
+        queue.push(`${projects} Claude projects Â· ${messages.toLocaleString()} messages`);
       }
       const memFiles = Number(ld?.memory?.stats?.totalFiles ?? 0);
       const memWs = Number(ld?.memory?.stats?.totalWorkspaces ?? 0);
@@ -1272,17 +1272,17 @@ function StepDetect({
       if (ld?.subscriptions?.chatgpt?.present) subs.push("ChatGPT");
       if (ld?.subscriptions?.openrouter?.label) subs.push("OpenRouter");
       if (ld?.subscriptions?.openclaw?.lastTouchedAt) subs.push("OpenClaw");
-      if (subs.length > 0) queue.push(`Subscriptions: ${subs.join(" · ")}`);
+      if (subs.length > 0) queue.push(`Subscriptions: ${subs.join(" Â· ")}`);
       const value7d = Number(ld?.summary?.valueExtracted7d ?? 0);
       if (value7d > 0) {
         queue.push(`API-equivalent token spend: $${Math.round(value7d).toLocaleString()} (last 7d)`);
       }
     } else {
-      // No real scan yet — show a friendly hint without faking discoveries.
-      queue.push("No real scan yet — run `bun run setup` in your terminal");
+      // No real scan yet â€” show a friendly hint without faking discoveries.
+      queue.push("No real scan yet â€” run `bun run setup` in your terminal");
     }
 
-    // Push every find synchronously — no animation. The user lands on a
+    // Push every find synchronously â€” no animation. The user lands on a
     // populated results card immediately.
     for (const f of queue) addFind(f);
   }, [addFind]);
@@ -1302,7 +1302,7 @@ function StepDetect({
       </div>
     );
   }
-  // Detection data is always sourced from the imported liveData module —
+  // Detection data is always sourced from the imported liveData module â€”
   // no sidecar fetch, no fresh-data state. The aggregator wrote
   // src/data/live-data.json when the user ran `bun run setup` in their
   // terminal, and Vite picked it up when it served this page.
@@ -1341,7 +1341,7 @@ function StepDetect({
         <H1>Nothing detected yet.</H1>
         <Sub>
           We couldn't find Claude Code, Codex, or any other tools we know about. Install one and
-          come back — the wizard will pick them up automatically.
+          come back â€” the wizard will pick them up automatically.
         </Sub>
         <div className="rounded-2xl border border-dashed border-border bg-card/30 p-10 text-center">
           <a href="https://claude.ai/code" className="text-sm" style={{ color: ORANGE }}>
@@ -1427,14 +1427,14 @@ function StepDetect({
         We'll watch the ones you check. {enabledCount} of {TOOLS.length} enabled.
       </Sub>
 
-      {/* Detection results strip — confirmation that the scan actually saw your
+      {/* Detection results strip â€” confirmation that the scan actually saw your
           editors, CLIs, and terminals. Sits quietly above the toggle grid so
           the headline of this step is still about the scan result, not the
           inventory. */}
       <DetectionResults />
 
       <SectionLabel>
-        On your machine <span className="text-muted-foreground/60">· {detected.length}</span>
+        On your machine <span className="text-muted-foreground/60">Â· {detected.length}</span>
       </SectionLabel>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
         {detected.map(renderCard)}
@@ -1443,7 +1443,7 @@ function StepDetect({
       {missing.length > 0 && (
         <>
           <SectionLabel muted>
-            Not detected <span className="text-muted-foreground/60">· {missing.length}</span>
+            Not detected <span className="text-muted-foreground/60">Â· {missing.length}</span>
           </SectionLabel>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-6 opacity-75">
             {missing.map(renderCard)}
@@ -1466,7 +1466,7 @@ function StepDetect({
 // Pretty animated loader for Step 2. Pulse ring + cycling stage labels so the
 // user has something to read while the aggregator is grinding in the background.
 // `finds` is the list of "we found X" lines parsed from the aggregator's stdout
-// in real time — they animate in as discoveries land.
+// in real time â€” they animate in as discoveries land.
 function DetectScanLoader({ stageIdx, finds }: { stageIdx: number; finds: string[] }) {
   const stage = SCAN_STAGES[stageIdx];
   const StageIcon = stage.icon;
@@ -1480,7 +1480,7 @@ function DetectScanLoader({ stageIdx, finds }: { stageIdx: number; finds: string
         boxShadow: "inset 0 0 0 1px rgba(255, 255, 255, 0.02)",
       }}
     >
-      {/* Soft ambient orange glow behind the pulse — gives the loader weight */}
+      {/* Soft ambient orange glow behind the pulse â€” gives the loader weight */}
       <div
         aria-hidden
         className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 h-56 w-56 rounded-full blur-3xl opacity-40"
@@ -1537,7 +1537,7 @@ function DetectScanLoader({ stageIdx, finds }: { stageIdx: number; finds: string
         ))}
       </div>
 
-      {/* Live "found X" feed — each entry animates in as the aggregator
+      {/* Live "found X" feed â€” each entry animates in as the aggregator
           surfaces it. Caps at 6 visible to keep the panel breathable. */}
       {finds.length > 0 && (
         <div className="w-full max-w-md text-left border-t border-border/40 pt-5">
@@ -1714,7 +1714,7 @@ function DetectionResults() {
             ? [
                 <DetectionCard
                   key="__current__"
-                  iconText="●"
+                  iconText="â—"
                   iconColor={EMERALD}
                   name={`${currentTerminal.name} (current)`}
                   detected
@@ -1724,7 +1724,7 @@ function DetectionResults() {
           ...detectedTerms.map(({ spec, entry }) => (
             <DetectionCard
               key={spec.key}
-              iconText="▱"
+              iconText="â–±"
               iconColor={SKY}
               name={spec.name}
               detected
@@ -1736,7 +1736,7 @@ function DetectionResults() {
         missing={missingTerms.map(({ spec, entry }) => (
           <DetectionCard
             key={spec.key}
-            iconText="▱"
+            iconText="â–±"
             iconColor="#9aa3b0"
             name={spec.name}
             detected={false}
@@ -1823,7 +1823,7 @@ function DetectionCard({
   version?: string;
   path?: string;
 }) {
-  const meta = path ?? (detected ? "—" : undefined);
+  const meta = path ?? (detected ? "â€”" : undefined);
   const versionLabel = version ? (version.startsWith("v") ? version : `v${version}`) : null;
   return (
     <div
@@ -1851,7 +1851,7 @@ function DetectionCard({
             fontSize: 11,
           }}
         >
-          {iconText ?? "·"}
+          {iconText ?? "Â·"}
         </div>
       )}
       <div className="min-w-0 flex-1">
@@ -1864,7 +1864,7 @@ function DetectionCard({
               color: detected ? EMERALD : "#9aa3b0",
             }}
           >
-            {detected ? (versionLabel ? `Detected · ${versionLabel}` : "Detected") : "Not found"}
+            {detected ? (versionLabel ? `Detected Â· ${versionLabel}` : "Detected") : "Not found"}
           </span>
         </div>
         {detected && meta && (
@@ -1922,12 +1922,12 @@ function AddToolModal({ onClose }: { onClose: () => void }) {
 
 // ---------- Step 4: Connect your stack ----------
 
-// (buildDetectionCards / DetectionCardView removed — the old "Connect stack"
+// (buildDetectionCards / DetectionCardView removed â€” the old "Connect stack"
 // step was replaced by Step 3 "Memory" and Step 4 "API keys", which use
 // dedicated MemoryStoreCard + ApiKeyRow components below.)
 
 // Inline API-key field used by Step 4. Logo on the left, label + one-line
-// "what this unlocks" explainer above the input. No skip checkboxes — leave
+// "what this unlocks" explainer above the input. No skip checkboxes â€” leave
 // the field blank to skip.
 function ApiKeyRow({
   name,
@@ -2012,7 +2012,7 @@ function ApiKeyRow({
               style={{ borderColor: `${EMERALD}30` }}
             >
               <Check className="h-3 w-3 shrink-0" style={{ color: EMERALD }} />
-              <span>detected in your shell — leave blank</span>
+              <span>detected in your shell â€” leave blank</span>
             </div>
           ) : (
             <div className="relative">
@@ -2043,13 +2043,13 @@ function ApiKeyRow({
 
 // ---------- Step 3: Memory (Pinecone / Obsidian / Notion / Logseq) ----------
 
-// What each memory store unlocks for the user — shown when nothing is detected
+// What each memory store unlocks for the user â€” shown when nothing is detected
 // to explain *why* they'd connect this thing in the first place.
 const MEMORY_BLURB: Record<"pinecone" | "obsidian" | "notion" | "logseq", string> = {
   pinecone: "Vector database for embeddings. Lets the dashboard read across long-term memory.",
   obsidian: "Local markdown notes app. We index your vault into the memory graph.",
   notion: "If you keep specs and decisions in Notion, we'll pull them into the graph.",
-  logseq: "Networked outliner. Same idea as Obsidian — local-first markdown blocks.",
+  logseq: "Networked outliner. Same idea as Obsidian â€” local-first markdown blocks.",
 };
 
 function StepMemoryConnect({
@@ -2115,12 +2115,12 @@ function StepMemoryConnect({
 
       {!stores ? (
         <div className="rounded-2xl border border-dashed border-border bg-card/30 p-6 text-sm text-muted-foreground leading-relaxed">
-          We haven't scanned your machine yet. Go back to the previous step and let it finish — once
+          We haven't scanned your machine yet. Go back to the previous step and let it finish â€” once
           detection runs we'll show your real memory stores here.
         </div>
       ) : (
         <div className="space-y-3.5">
-          {/* Pinecone — detection card + inline API key */}
+          {/* Pinecone â€” detection card + inline API key */}
           <MemoryStoreCard
             name="Pinecone"
             iconUrl={pineconeLogo}
@@ -2142,13 +2142,13 @@ function StepMemoryConnect({
             }
             statusLine={
               stores.pinecone.detected && pineconeKeySaved
-                ? `${stores.pinecone.indexes ?? 0} indexes · ${(stores.pinecone.totalVectors ?? 0).toLocaleString()} vectors`
+                ? `${stores.pinecone.indexes ?? 0} indexes Â· ${(stores.pinecone.totalVectors ?? 0).toLocaleString()} vectors`
                 : pineconeKeySaved
                   ? "API key saved. Claude OS will connect during activation."
                   : "Paste your API key to connect Pinecone."
             }
           >
-            {/* Inline API key — required for Pinecone to actually be readable */}
+            {/* Inline API key â€” required for Pinecone to actually be readable */}
             <div className="mt-4">
               <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-1.5 flex items-center gap-1.5">
                 <KeyRound className="h-3 w-3" /> Pinecone API key
@@ -2186,7 +2186,7 @@ function StepMemoryConnect({
             </div>
           </MemoryStoreCard>
 
-          {/* Obsidian — detection + manual path input */}
+          {/* Obsidian â€” detection + manual path input */}
           <MemoryStoreCard
             name="Obsidian"
             iconUrl={obsidianLogo}
@@ -2196,7 +2196,7 @@ function StepMemoryConnect({
             badgeTone={stores.obsidian.detected ? "success" : "action"}
             statusLine={
               stores.obsidian.detected
-                ? `${stores.obsidian.files ?? 0} files · ${stores.obsidian.vaultPath ?? "~/Documents/Obsidian Vault"}`
+                ? `${stores.obsidian.files ?? 0} files Â· ${stores.obsidian.vaultPath ?? "~/Documents/Obsidian Vault"}`
                 : undefined
             }
           >
@@ -2241,7 +2241,7 @@ function StepMemoryConnect({
             </div>
           </MemoryStoreCard>
 
-          {/* Notion — connection card */}
+          {/* Notion â€” connection card */}
           <MemoryStoreCard
             name="Notion"
             iconUrl={notionLogo}
@@ -2449,7 +2449,7 @@ function MemoryStoreCard({
         ? `${AMBER}08`
         : "var(--card-bg, rgba(0,0,0,0))";
   // Subtle outer glow when detected so the card reads as a state, not just
-  // a coloured outline. Quiet by default — strong enough that "Connected"
+  // a coloured outline. Quiet by default â€” strong enough that "Connected"
   // feels like a confirmation.
   const shadow =
     tone === "success"
@@ -2599,7 +2599,7 @@ function StepApiKeys({
         <span>
           We never validate keys here. On the final step we write any keys you pasted to{" "}
           <span className="font-mono text-foreground/75">claude-os/.env.local</span> via the local
-          sidecar — they never leave this machine.
+          sidecar â€” they never leave this machine.
         </span>
       </p>
     </div>
@@ -2625,13 +2625,13 @@ function StepValue({ config, updateConfig }: { config: ConfigShape; updateConfig
     }));
   };
 
-  // Live calc — assume the average operator saves 10 hours/month with the
+  // Live calc â€” assume the average operator saves 10 hours/month with the
   // dashboard. Multiplied by the user's hourly rate to make the number
   // concrete. The 47-hour figure on the original was a 30-day demo number;
   // we replace it with the cleaner 10/month framing the brief asked for.
   const hoursSavedMonthly = 10;
   const monthlyDollars = Math.round(rate * hoursSavedMonthly);
-  // 30-day skills usage estimate — the legacy preview line.
+  // 30-day skills usage estimate â€” the legacy preview line.
   const hoursSaved30d = 47;
   const dollars30d = Math.round(rate * hoursSaved30d);
 
@@ -2707,7 +2707,7 @@ function StepValue({ config, updateConfig }: { config: ConfigShape; updateConfig
         </div>
       </div>
 
-      {/* Live preview — both the brief's "save 10 hours/month" framing and
+      {/* Live preview â€” both the brief's "save 10 hours/month" framing and
           the longer-horizon "last 30 days of skills use" figure for context. */}
       <div
         className="rounded-xl border p-5 mb-3"
@@ -2790,7 +2790,7 @@ function StepDream({ config, updateConfig }: { config: ConfigShape; updateConfig
       <H1>When should we dream?</H1>
       <Sub>
         Each night while you sleep, Dream reads your last 24 hours of activity across Claude, Codex,
-        Pinecone, and Obsidian — finds patterns, surfaces drift, and writes 4 prescriptions you can
+        Pinecone, and Obsidian â€” finds patterns, surfaces drift, and writes 4 prescriptions you can
         run as one-liners in the morning. Pick when it runs.
       </Sub>
 
@@ -2820,7 +2820,7 @@ function StepDream({ config, updateConfig }: { config: ConfigShape; updateConfig
         </div>
       </div>
 
-      {/* Time of day cards — 2 only */}
+      {/* Time of day cards â€” 2 only */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         {CADENCE_OPTIONS.map((p) => {
           const active = activeCadence === p.id;
@@ -2873,8 +2873,8 @@ function StepDream({ config, updateConfig }: { config: ConfigShape; updateConfig
           label="Generate a fresh cosmos hero image each Dream"
           hint={
             dream.heroImage
-              ? "~$0.04 per run · requires OpenAI API key"
-              : "Off — we'll use the built-in default images."
+              ? "~$0.04 per run Â· requires OpenAI API key"
+              : "Off â€” we'll use the built-in default images."
           }
         />
 
@@ -2923,7 +2923,7 @@ const DREAM_BUCKETS: {
     blurb: "Recurring topics & tasks that haven't become skills yet.",
     detail:
       "Reads your last 7 days of user messages, embeds them, clusters by intent. Flags any task you've done manually three or more times so we can suggest turning it into a skill.",
-    example: "You've debugged Vite SSR 6× this week — make a skill?",
+    example: "You've debugged Vite SSR 6Ã— this week â€” make a skill?",
     Icon: MessagesSquare,
     color: ORANGE,
   },
@@ -2932,7 +2932,7 @@ const DREAM_BUCKETS: {
     blurb: "Model misuse, low cache hit rates, token waste.",
     detail:
       "Inspects every model call, looks for high-Opus usage on simple work, low cache hit rates, and oversized contexts. Recommends the cheaper model swap when output quality won't suffer.",
-    example: "Sonnet running prompts Haiku could handle — save ~$38/mo.",
+    example: "Sonnet running prompts Haiku could handle â€” save ~$38/mo.",
     Icon: Coins,
     color: AMBER,
   },
@@ -2941,7 +2941,7 @@ const DREAM_BUCKETS: {
     blurb: "Dead, dormant, or upgrade-worthy skills in your stack.",
     detail:
       "Tracks each skill's last-used date, invocation count, average tokens, and error rate. Surfaces dead skills to archive, dormant ones to revive, and frequent chains worth composing.",
-    example: "'pdf-extract' unused 41 days — archive or sharpen?",
+    example: "'pdf-extract' unused 41 days â€” archive or sharpen?",
     Icon: Zap,
     color: VIOLET,
   },
@@ -2958,17 +2958,17 @@ const DREAM_BUCKETS: {
     title: "Session hygiene",
     blurb: "Context rot, edit-without-read patterns, runaway length.",
     detail:
-      "Watches session length, message density, and tool-call ordering. Catches the patterns that erode quality — long sessions past 120K tokens, edits before reads, and missed compactions.",
+      "Watches session length, message density, and tool-call ordering. Catches the patterns that erode quality â€” long sessions past 120K tokens, edits before reads, and missed compactions.",
     example: "3 sessions edited files before reading them.",
     Icon: Activity,
     color: EMERALD,
   },
   {
     title: "Workflow patterns",
-    blurb: "Manual sequences you repeat — ripe for automation.",
+    blurb: "Manual sequences you repeat â€” ripe for automation.",
     detail:
       "Detects always-paired commands, repeated tool sequences, and morning routines. Suggests when two skills should chain into one or a workflow deserves its own keystroke.",
-    example: "Lint → test → commit done by hand 11× this week.",
+    example: "Lint â†’ test â†’ commit done by hand 11Ã— this week.",
     Icon: Workflow,
     color: ORANGE_SOFT,
   },
@@ -2976,8 +2976,8 @@ const DREAM_BUCKETS: {
     title: "External opportunity",
     blurb: "New tools, skills, or models worth adopting right now.",
     detail:
-      "Optional: scans community skills, new model releases, and MCP servers relevant to your topic areas. Off by default — turn it on for proactive recommendations from outside your stack.",
-    example: "GPT-5.1-mini just dropped — 3× cheaper for your routing.",
+      "Optional: scans community skills, new model releases, and MCP servers relevant to your topic areas. Off by default â€” turn it on for proactive recommendations from outside your stack.",
+    example: "GPT-5.1-mini just dropped â€” 3Ã— cheaper for your routing.",
     Icon: Telescope,
     color: "#f472b6",
   },
@@ -2985,8 +2985,8 @@ const DREAM_BUCKETS: {
     title: "Business outcomes",
     blurb: "Real ROI per skill and false-positive savings.",
     detail:
-      "Compares time-saved estimates to whether the skill output was actually used downstream. Catches skills that claim ROI but produce work you ignore — a quiet drain.",
-    example: "'invoice-parser' saved 6.2 hrs · ~$930 this week.",
+      "Compares time-saved estimates to whether the skill output was actually used downstream. Catches skills that claim ROI but produce work you ignore â€” a quiet drain.",
+    example: "'invoice-parser' saved 6.2 hrs Â· ~$930 this week.",
     Icon: TrendingUp,
     color: "#34d399",
   },
@@ -3171,7 +3171,7 @@ function StepYoureSet({
     setPhase("installing");
     const written = persistInstalledConfig(finalConfig, true);
     if (!written) {
-      setErrorMessage("localStorage write failed — try a different browser or disable private mode.");
+      setErrorMessage("localStorage write failed â€” try a different browser or disable private mode.");
       setPhase("error");
       return;
     }
@@ -3214,15 +3214,15 @@ function StepYoureSet({
         <span className="relative inline-flex items-center justify-center gap-2.5">
           {phase === "success" ? (
             <>
-              <Check className="h-5 w-5" strokeWidth={3} /> Done — opening dashboard…
+              <Check className="h-5 w-5" strokeWidth={3} /> Done â€” opening dashboardâ€¦
             </>
           ) : phase === "aggregating" ? (
             <>
-              <Loader2 className="h-5 w-5 animate-spin" /> Aggregating your data…
+              <Loader2 className="h-5 w-5 animate-spin" /> Aggregating your dataâ€¦
             </>
           ) : phase === "installing" ? (
             <>
-              <Loader2 className="h-5 w-5 animate-spin" /> Activating…
+              <Loader2 className="h-5 w-5 animate-spin" /> Activatingâ€¦
             </>
           ) : (
             <>
@@ -3245,7 +3245,7 @@ function StepYoureSet({
             <AlertTriangle className="h-3.5 w-3.5" /> Couldn't reach the local server
           </div>
           <p>
-            Restart <span className="font-mono">bun run dev</span> — that starts the dashboard and
+            Restart <span className="font-mono">bun run dev</span> â€” that starts the dashboard and
             the local server together. Then click Activate again.
           </p>
           {errorMessage && <p className="mt-2 opacity-60 text-[11px]">Detail: {errorMessage}</p>}
@@ -3263,7 +3263,7 @@ function StepYoureSet({
   );
 }
 
-// (StepDone, ConfigDrawer, renderJsonWithHighlights, formatPrimitive removed —
+// (StepDone, ConfigDrawer, renderJsonWithHighlights, formatPrimitive removed â€”
 // the right-side JSON drawer is gone now that the activate button on the final
 // step writes the config directly via the sidecar.)
 
@@ -3272,7 +3272,7 @@ function StepYoureSet({
 function H1({ children }: { children: React.ReactNode }) {
   // Explicit color so the heading is never inherited as dim text against the
   // dark background. Render at near-white in dark mode regardless of parent.
-  // Size bump (text-4xl → text-5xl on md) so the H1 dominates the Sub instead
+  // Size bump (text-4xl â†’ text-5xl on md) so the H1 dominates the Sub instead
   // of fighting it for visual weight.
   return (
     <h1
@@ -3331,7 +3331,7 @@ function Toggle({
   onChange: () => void;
   stop?: boolean;
 }) {
-  // Geometry: pill 28px × 52px, knob 22px. Knob sits flush at 3px from start
+  // Geometry: pill 28px Ã— 52px, knob 22px. Knob sits flush at 3px from start
   // when off (3 + 22 = 25, plenty of clearance), 27px when on (27 + 22 = 49,
   // 3px from right edge). Glow stays close so the knob never appears outside.
   return (

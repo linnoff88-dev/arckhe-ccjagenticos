@@ -25,25 +25,25 @@ const jobs: Job[] = [
     out: "src/assets/skills/deep-research.png",
     aspect: "16:9",
     prompt:
-      "A serene anime watercolor scene of a warm lamp-lit ancient library at dusk. Towering wooden bookshelves stretch into shadow, scrolls and books glow softly, dust motes drift in golden beams of light. A cozy reading nook with floating papers and an unrolled map. No characters, no text, no watermark. Hand-drawn painterly aesthetic, deep amber and forest green palette, dreamy atmosphere, miyazaki-inspired film quality, cinematic depth.",
+      "A serene anime watercolor scene of a warm lamp-lit ancient library at dusk. Towering wooden bookshelves stretch into shadow, scrolls and books glow softly, dust motes drift in golden beams of light. A cozy reading nook with floating papers and an unrolled map. No characters, no text, no watermark. Hand-drawn painterly aesthetic, deep amber and forest green palette, dreamy atmosphere, miyazaki-inspired film quality, cARCKHÉtic depth.",
   },
   {
     out: "src/assets/skills/title-generator.png",
     aspect: "16:9",
     prompt:
-      "A serene anime watercolor of a floating workshop in the clouds at golden hour. An antique typewriter on a wooden desk with paper sheets drifting in soft wind. Ink bottles, candles glowing, distant mountains with cumulus clouds. No characters, no text, no watermark. Hand-drawn painterly aesthetic, magical and serene mood, miyazaki-inspired film quality, warm cream and sky blue palette, cinematic light rays.",
+      "A serene anime watercolor of a floating workshop in the clouds at golden hour. An antique typewriter on a wooden desk with paper sheets drifting in soft wind. Ink bottles, candles glowing, distant mountains with cumulus clouds. No characters, no text, no watermark. Hand-drawn painterly aesthetic, magical and serene mood, miyazaki-inspired film quality, warm cream and sky blue palette, cARCKHÉtic light rays.",
   },
   {
     out: "src/assets/skills/comment-miner.png",
     aspect: "16:9",
     prompt:
-      "A serene anime watercolor of a magical forest post office at twilight. Hundreds of letters and envelopes flying through the air like white birds. Cozy lantern-lit shelves of mossy mailboxes, stone path, fireflies dancing. No characters, no text, no watermark. Hand-drawn painterly aesthetic, gentle and magical mood, miyazaki-inspired film quality, soft forest greens and warm yellow lighting, cinematic depth.",
+      "A serene anime watercolor of a magical forest post office at twilight. Hundreds of letters and envelopes flying through the air like white birds. Cozy lantern-lit shelves of mossy mailboxes, stone path, fireflies dancing. No characters, no text, no watermark. Hand-drawn painterly aesthetic, gentle and magical mood, miyazaki-inspired film quality, soft forest greens and warm yellow lighting, cARCKHÉtic depth.",
   },
   {
     out: "src/assets/skills/signal-report.png",
     aspect: "16:9",
     prompt:
-      "A serene anime watercolor of a mountain watchtower at sunrise with a brass radio antenna at its peak. Glowing concentric pastel ripples emanating from the antenna. Billowing clouds below, wooden balcony with telescopes and weather instruments. No characters, no text, no watermark. Hand-drawn painterly aesthetic, hopeful and cinematic mood, miyazaki-inspired film quality, dawn pinks fading into ocean blues, sun behind antenna.",
+      "A serene anime watercolor of a mountain watchtower at sunrise with a brass radio antenna at its peak. Glowing concentric pastel ripples emanating from the antenna. Billowing clouds below, wooden balcony with telescopes and weather instruments. No characters, no text, no watermark. Hand-drawn painterly aesthetic, hopeful and cARCKHÉtic mood, miyazaki-inspired film quality, dawn pinks fading into ocean blues, sun behind antenna.",
   },
   {
     out: "src/assets/logos/openai-gpt5.png",
@@ -76,8 +76,8 @@ async function main() {
   );
   console.log("\n[batch] summary:");
   results.forEach((r, i) => {
-    if (r.status === "fulfilled") console.log(`  ✅ ${jobs[i].out}`);
-    else console.log(`  ❌ ${jobs[i].out} — ${(r.reason as Error).message}`);
+    if (r.status === "fulfilled") console.log(`  âœ… ${jobs[i].out}`);
+    else console.log(`  âŒ ${jobs[i].out} â€” ${(r.reason as Error).message}`);
   });
 }
 

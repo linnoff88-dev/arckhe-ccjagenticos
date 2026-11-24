@@ -24,7 +24,7 @@ interface Job {
 }
 
 const BASE =
-  "A serene anime watercolor stargazing scene at night. A solitary observatory or astronomer's nook on a quiet hilltop, brass telescope angled to the sky, soft constellations forming over distant misty mountains. Floating papers and lanterns glow gently, fireflies drift. Hand-drawn painterly aesthetic, miyazaki-inspired film quality, dreamy and contemplative mood, generous starry sky with nebula clouds, cinematic depth. No characters. No text. No watermark. No UI. No logos.";
+  "A serene anime watercolor stargazing scene at night. A solitary observatory or astronomer's nook on a quiet hilltop, brass telescope angled to the sky, soft constellations forming over distant misty mountains. Floating papers and lanterns glow gently, fireflies drift. Hand-drawn painterly aesthetic, miyazaki-inspired film quality, dreamy and contemplative mood, generous starry sky with nebula clouds, cARCKHÉtic depth. No characters. No text. No watermark. No UI. No logos.";
 
 const jobs: Job[] = [
   {
@@ -64,8 +64,8 @@ async function main() {
   );
   console.log("\n[dream] summary:");
   results.forEach((r, i) => {
-    if (r.status === "fulfilled") console.log(`  ✅ ${jobs[i].out}`);
-    else console.log(`  ❌ ${jobs[i].out} — ${(r.reason as Error).message}`);
+    if (r.status === "fulfilled") console.log(`  âœ… ${jobs[i].out}`);
+    else console.log(`  âŒ ${jobs[i].out} â€” ${(r.reason as Error).message}`);
   });
 }
 
