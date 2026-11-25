@@ -1135,7 +1135,7 @@ function StepPersonalize() {
             {busy ? "Processingâ€¦" : "Drop a photo here, or click to browse"}
           </div>
           <div className="text-[12px] text-muted-foreground leading-relaxed">
-            JPG, PNG, or WEBP. We downscale to 256Ã—256 before saving â€” your file never leaves the
+            JPG, PNG, or WEBP. We downscale to 256ê—256 before saving â€” your file never leaves the
             browser.
           </div>
           {error && (
@@ -2923,7 +2923,7 @@ const DREAM_BUCKETS: {
     blurb: "Recurring topics & tasks that haven't become skills yet.",
     detail:
       "Reads your last 7 days of user messages, embeds them, clusters by intent. Flags any task you've done manually three or more times so we can suggest turning it into a skill.",
-    example: "You've debugged Vite SSR 6Ã— this week â€” make a skill?",
+    example: "You've debugged Vite SSR 6ê— this week â€” make a skill?",
     Icon: MessagesSquare,
     color: ORANGE,
   },
@@ -2968,7 +2968,7 @@ const DREAM_BUCKETS: {
     blurb: "Manual sequences you repeat â€” ripe for automation.",
     detail:
       "Detects always-paired commands, repeated tool sequences, and morning routines. Suggests when two skills should chain into one or a workflow deserves its own keystroke.",
-    example: "Lint â†’ test â†’ commit done by hand 11Ã— this week.",
+    example: "Lint â†’ test â†’ commit done by hand 11ê— this week.",
     Icon: Workflow,
     color: ORANGE_SOFT,
   },
@@ -2977,7 +2977,7 @@ const DREAM_BUCKETS: {
     blurb: "New tools, skills, or models worth adopting right now.",
     detail:
       "Optional: scans community skills, new model releases, and MCP servers relevant to your topic areas. Off by default â€” turn it on for proactive recommendations from outside your stack.",
-    example: "GPT-5.1-mini just dropped â€” 3Ã— cheaper for your routing.",
+    example: "GPT-5.1-mini just dropped â€” 3ê— cheaper for your routing.",
     Icon: Telescope,
     color: "#f472b6",
   },
@@ -3331,7 +3331,7 @@ function Toggle({
   onChange: () => void;
   stop?: boolean;
 }) {
-  // Geometry: pill 28px Ã— 52px, knob 22px. Knob sits flush at 3px from start
+  // Geometry: pill 28px ê— 52px, knob 22px. Knob sits flush at 3px from start
   // when off (3 + 22 = 25, plenty of clearance), 27px when on (27 + 22 = 49,
   // 3px from right edge). Glow stays close so the knob never appears outside.
   return (
